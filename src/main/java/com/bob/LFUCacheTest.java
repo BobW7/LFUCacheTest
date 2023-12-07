@@ -3,9 +3,6 @@ package com.bob;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * 正确性测试
- */
 class LFUCacheTest {
 
     @Test

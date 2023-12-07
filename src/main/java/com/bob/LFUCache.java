@@ -5,11 +5,12 @@ import java.util.Map;
 
 /**
  * Java program for LFU Cache (https://en.wikipedia.org/wiki/Least_frequently_used)
- *
- * @author Akshay Dubey (https://github.com/itsAkshayDubey)
+ * LFU缓存的Java程序
+ * 作者：Akshay Dubey (https://github.com/itsAkshayDubey)
  */
 public class LFUCache<K, V> {
 
+    // 内部类表示缓存中的节点
     private class Node {
 
         private K key;
@@ -25,12 +26,11 @@ public class LFUCache<K, V> {
         }
     }
 
-    private Node head;
-    private Node tail;
-    private Map<K, Node> map = null;
-    private Integer capacity;
-    private static final int DEFAULT_CAPACITY = 100;
-
+    private Node head; // 缓存中头部节点
+    private Node tail; // 缓存中尾部节点
+    private Map<K, Node> map = null; // 用于存储键和节点的映射关系
+    private Integer capacity; // 缓存容量
+    private static final int DEFAULT_CAPACITY = 100; // 默认容量为100
     public LFUCache() {
         this.capacity = DEFAULT_CAPACITY;
     }
@@ -41,11 +41,10 @@ public class LFUCache<K, V> {
     }
 
     /**
-     * This method returns value present in the cache corresponding to the key passed as parameter
+     * 通过传入的键获取缓存中对应的值
      *
-     * @param <K> key for which value is to be retrieved
-     * @returns <V> object corresponding to the key passed as parameter, returns null if <K> key is
-     * not present in the cache
+     * @param <K> 键的类型
+     * @returns <V> 与传入键对应的值，如果键不存在则返回null
      */
     public V get(K key) {
         if (this.map.get(key) == null) {
@@ -61,10 +60,10 @@ public class LFUCache<K, V> {
     }
 
     /**
-     * This method stores <K> key and <V> value in the cache
+     * 将键值对存储到缓存中
      *
-     * @param <K> key which is to be stored in the cache
-     * @param <V> value which is to be stored in the cache
+     * @param <K> 要存储的键
+     * @param <V> 要存储的值
      */
     public void put(K key, V value) {
         if (map.containsKey(key)) {
@@ -85,9 +84,9 @@ public class LFUCache<K, V> {
     }
 
     /**
-     * This method stores the node in the cache with updated frequency
+     * 将节点以更新频率的方式存储到缓存中
      *
-     * @param Node node which is to be updated in the cache
+     * @param Node 要存储的节点
      */
     private void addNodeWithUpdatedFrequency(Node node) {
         if (tail != null && head != null) {
@@ -124,9 +123,9 @@ public class LFUCache<K, V> {
     }
 
     /**
-     * This method removes node from the cache
+     * 从缓存中移除节点
      *
-     * @param Node node which is to be removed in the cache
+     * @param Node 要移除的节点
      */
     private void removeNode(Node node) {
         if (node.previous != null) {
