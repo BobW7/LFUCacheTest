@@ -9,8 +9,7 @@ import java.util.concurrent.Executors;
 /**
  * 并发测试
  */
-
-public class ConcurrentAccessTest {
+public class LFUCacheConcurrentAccessTest {
 
     private static final int THREAD_COUNT = 5;
     private static final int ITERATIONS_PER_THREAD = 100;

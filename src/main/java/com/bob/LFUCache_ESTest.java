@@ -5,16 +5,18 @@
 
 package com.bob;
 
+import com.evosource.LFUCache_ESTest_scaffolding;
 import org.evosuite.runtime.EvoRunner;
 import org.evosuite.runtime.EvoRunnerParameters;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.evosuite.runtime.EvoAssertions.verifyException;
 import static org.junit.Assert.*;
 
-
+/**
+ * 验证缓存的基本功能的正确性。包括存储（put）、获取（get）、移除操作。
+ */
 @RunWith(EvoRunner.class)
 @EvoRunnerParameters(mockJVMNonDeterminism = true, useVFS = true, useVNET = true, resetStaticState = true, separateClassLoader = true, useJEE = true)
 public class LFUCache_ESTest extends LFUCache_ESTest_scaffolding {

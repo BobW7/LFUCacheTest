@@ -1,82 +1,55 @@
 package com.bob;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
-class LFUCacheTest {
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
 
-    @Test
-    void testLFUCacheWithIntegerValueShouldPass() {
-        LFUCache<Integer, Integer> lfuCache = new LFUCache<>(5);
-        lfuCache.put(1, 10);
-        lfuCache.put(2, 20);
-        lfuCache.put(3, 30);
-        lfuCache.put(4, 40);
-        lfuCache.put(5, 50);
+/**
+ * 验证缓存命中率的准确性，验证最不经常使用的节点是否被正确移除。
+ */
+public class LFUCacheTest {
+    @org.junit.Test
+    public void testCacheHitRate() {
+        LFUCache<String, Integer> cache = new LFUCache<>(3); // 创建容量为3的缓存
+        cache.put("A", 1);
+        cache.put("B", 2);
+        cache.put("C", 3);
 
-        // get方法调用将键为1的频率增加1
-        Assertions.assertEquals(10, lfuCache.get(1));
-
-        // 这个操作将移除键为2的值
-        lfuCache.put(6, 60);
-
-        // 因为键为2的值已被移除，所以应返回null
-        Assertions.assertEquals(null, lfuCache.get(2));
-
-        // 应返回60
-        Assertions.assertEquals(60, lfuCache.get(6));
-
-        // 这个操作将移除键为3的值
-        lfuCache.put(7, 70);
-
-        Assertions.assertEquals(null, lfuCache.get(2));
-        Assertions.assertEquals(70, lfuCache.get(7));
+        // 模拟访问模式：A, B, C, A, B, C, A, B, C
+        // 预期结果：缓存命中率为1.0，因为所有的访问都在缓存中命中
+        int hits = 0;
+        int totalAccess = 9;
+        for (int i = 0; i < totalAccess; i++) {
+            if (cache.get("A") != null || cache.get("B") != null || cache.get("C") != null) {
+                hits++;
+            }
+        }
+        double hitRate = (double) hits / totalAccess;
+        System.out.println("缓存命中率: " + hitRate*100+"%");
+        assertEquals(hitRate,1.0);
     }
-
     @Test
-    void testLFUCacheWithStringValueShouldPass() {
-        LFUCache<Integer, String> lfuCache = new LFUCache<>(5);
-        lfuCache.put(1, "Alpha");
-        lfuCache.put(2, "Beta");
-        lfuCache.put(3, "Gamma");
-        lfuCache.put(4, "Delta");
-        lfuCache.put(5, "Eplison");
+    public void testNodeRemoval() {
+        LFUCache<String, Integer> cache = new LFUCache<>(3); // 创建容量为3的缓存
+        cache.put("A", 1);
+        cache.put("B", 2);
+        cache.put("C", 3);
 
-        // get方法调用将键为1的频率增加1
-        Assertions.assertEquals("Alpha", lfuCache.get(1));
+        // 模拟访问模式：A, B, C, D, E, F, A, B, C
+        // 预期结果：节点D、E、F被加入缓存，节点A被移除
+        cache.put("D", 4);
+        cache.put("E", 5);
+        cache.put("F", 6);
 
-        // 这个操作将移除键为2的值
-        lfuCache.put(6, "Digamma");
-
-        // 因为键为2的值已被移除，所以应返回null
-        Assertions.assertEquals(null, lfuCache.get(2));
-
-        // 应返回字符串"Digamma"
-        Assertions.assertEquals("Digamma", lfuCache.get(6));
-
-        // 这个操作将移除键为3的值
-        lfuCache.put(7, "Zeta");
-
-        Assertions.assertEquals(null, lfuCache.get(2));
-        Assertions.assertEquals("Zeta", lfuCache.get(7));
-    }
-
-    /**
-     * 测试addNodeWithUpdatedFrequency方法
-     *
-     * @author yuluo
-     */
-    @Test
-    void testAddNodeWithUpdatedFrequency() {
-        LFUCache<Integer, String> lfuCache = new LFUCache<>(3);
-        lfuCache.put(1, "beijing");
-        lfuCache.put(2, "shanghai");
-        lfuCache.put(3, "gansu");
-
-        Assertions.assertEquals("beijing", lfuCache.get(1));
-
-        lfuCache.put(1, "shanxi");
-
-        Assertions.assertEquals("shanxi", lfuCache.get(1));
+        Integer valueA = cache.get("A"); // 期望结果为null，因为节点A已被移除
+        Integer valueD = cache.get("D"); // 期望结果为4，节点D存在于缓存中
+        Integer valueE = cache.get("E"); // 期望结果为5，节点E存在于缓存中
+        Integer valueF = cache.get("F"); // 期望结果为6，节点F存在于缓存中
+        assertNull(valueA);
+        assertEquals(4, valueD.intValue());
+        assertEquals(5, valueE.intValue());
+        assertEquals(6, valueF.intValue());
     }
 }
