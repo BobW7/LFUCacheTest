@@ -3,8 +3,9 @@
  * Tue Dec 05 12:58:34 GMT 2023
  */
 
-package com.bob;
+package com.bob.test;
 
+import com.bob.LFUCache;
 import com.evosource.LFUCache_ESTest_scaffolding;
 import org.evosuite.runtime.EvoRunner;
 import org.evosuite.runtime.EvoRunnerParameters;

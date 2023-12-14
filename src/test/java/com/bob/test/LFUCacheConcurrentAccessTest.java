@@ -1,5 +1,6 @@
-package com.bob;
+package com.bob.test;
 
+import com.bob.LFUCache;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,13 +14,14 @@ public class LFUCacheConcurrentAccessTest {
 
     private static final int THREAD_COUNT = 5;
     private static final int ITERATIONS_PER_THREAD = 100;
-
+    public int quickSort(){
+        return 0;
+    }
     @Test
     public void testConcurrentAccess() throws InterruptedException {
         LFUCache<Integer, String> cache = new LFUCache<>(5);
 
         ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
-
         // Submit tasks to the executor service
         for (int i = 0; i < THREAD_COUNT; i++) {
             executorService.execute(() -> {

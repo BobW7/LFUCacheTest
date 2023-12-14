@@ -1,5 +1,6 @@
-package com.bob;
+package com.bob.test;
 
+import com.bob.LFUCache;
 import org.junit.Test;
 
 import java.util.Random;
@@ -11,7 +12,7 @@ import static junit.framework.TestCase.assertNull;
  * 性能测试
  */
 public class LFUCachePerformanceTest {
-    private static final int CACHE_SIZE = 1000;
+    private static final int CACHE_SIZE = 1;
     private static final int TEST_DATA_SIZE = 1000000;
     private static final int TEST_ITERATIONS = 1000000;
 

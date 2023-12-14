@@ -1,5 +1,6 @@
-package com.bob;
+package com.bob.test;
 
+import com.bob.LFUCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -10,7 +11,7 @@ import java.util.Collection;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * 压力测试
+ * 压力测试（结合数据驱动）
  */
 @RunWith(Parameterized.class)
 public class LFUCacheStressTest {
@@ -22,6 +23,10 @@ public class LFUCacheStressTest {
         this.numberOfOperations = numberOfOperations;
     }
 
+    /**
+     * 数据驱动
+     * @return 对象数组集合，每个集合两个元素，表示缓存大小和操作次数
+     */
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{

@@ -1,7 +1,7 @@
-package com.bob;
+package com.bob.test;
 
+import com.bob.LFUCache;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNull;
@@ -10,7 +10,7 @@ import static junit.framework.TestCase.assertNull;
  * 验证缓存命中率的准确性，验证最不经常使用的节点是否被正确移除。
  */
 public class LFUCacheTest {
-    @org.junit.Test
+    @Test
     public void testCacheHitRate() {
         LFUCache<String, Integer> cache = new LFUCache<>(3); // 创建容量为3的缓存
         cache.put("A", 1);
